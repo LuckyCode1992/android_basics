@@ -5,7 +5,6 @@ import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -16,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_thread_demo.*
 class ThreadDemoActivity : AppCompatActivity() {
     var tvUIchange: TextView? = null
     var context: Context? = null
+    val threadPoolExceutorDemo = ThreadPoolExceutorDemo()
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +52,13 @@ class ThreadDemoActivity : AppCompatActivity() {
         btn_AsyncTask.setOnClickListener {
             asyncTask()
         }
+        /**
+         * newCachedThreadPool
+         */
+        btn_Executor_newCachedThreadPool.setOnClickListener {
+            threadPoolExceutorDemo.newCachedThreadPool()
+        }
+
 
     }
 
@@ -93,11 +100,10 @@ class ThreadDemoActivity : AppCompatActivity() {
          */
 //        executeOnExecutor 是并发
 //        execute是串行
-        MyAsyncTask("MyAsyncTask1",tvUIchange).execute("我是参数1")
-        MyAsyncTask("MyAsyncTask2",tvUIchange).execute("我是参数2")
-        MyAsyncTask("MyAsyncTask3",tvUIchange).execute("我是参数3")
+        MyAsyncTask("MyAsyncTask1", tvUIchange).execute("我是参数1")
+        MyAsyncTask("MyAsyncTask2", tvUIchange).execute("我是参数2")
+        MyAsyncTask("MyAsyncTask3", tvUIchange).execute("我是参数3")
     }
-
 
     inner class MyThread : Thread() {
         override fun run() {

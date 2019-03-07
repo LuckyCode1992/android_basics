@@ -35,12 +35,33 @@
                     android:text="AsyncTask"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+            <Button
+                    android:id="@+id/btn_Executor_newCachedThreadPool"
+                    android:text="newCachedThreadPool"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            <Button
+                    android:id="@+id/btn_Executor_newFixedThreadPool"
+                    android:text="newFixedThreadPool"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            <Button
+                    android:id="@+id/btn_Executor_newSingleThreadExecutor"
+                    android:text="newSingleThreadExecutor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            <Button
+                    android:id="@+id/btn_Executor_newScheduledThreadPool"
+                    android:text="newScheduledThreadPool"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             <TextView
                     android:id="@+id/tv_ui_change"
                     android:hint="ui更新测试"
                     android:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"/>
+
         </LinearLayout>
 
 
