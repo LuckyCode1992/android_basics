@@ -11,11 +11,13 @@ import android.widget.Toast
 import com.justcode.hxl.androidbasices.R
 import com.justcode.hxl.androidbasices.utils.logThread
 import kotlinx.android.synthetic.main.activity_thread_demo.*
+import java.util.concurrent.ExecutorService
 
 class ThreadDemoActivity : AppCompatActivity() {
     var tvUIchange: TextView? = null
     var context: Context? = null
     val threadPoolExceutorDemo = ThreadPoolExceutorDemo()
+    var services: MutableList<ExecutorService> = arrayListOf()
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,9 +58,43 @@ class ThreadDemoActivity : AppCompatActivity() {
          * newCachedThreadPool
          */
         btn_Executor_newCachedThreadPool.setOnClickListener {
-            threadPoolExceutorDemo.newCachedThreadPool()
+            services.add(threadPoolExceutorDemo.newCachedThreadPool())
+        }
+        /**
+         * newFixedThreadPool
+         */
+        btn_Executor_newFixedThreadPool.setOnClickListener {
+            services.add(threadPoolExceutorDemo.newFixedThreadPool())
         }
 
+        /**
+         *  newSingleThreadPool
+         */
+        btn_Executor_newSingleThreadPool.setOnClickListener {
+            services.add(threadPoolExceutorDemo.newSingleThreadExecutor())
+        }
+
+        /**
+         * newScheduledThreadPool
+         */
+        btn_Executor_newScheduledThreadPool.setOnClickListener {
+            services.add(threadPoolExceutorDemo.newScheduledThreadPool())
+        }
+        /**
+         * shutdown
+         */
+        btn_Executor_shutdown.setOnClickListener {
+            services.forEach { it0 ->
+                threadPoolExceutorDemo.shutDown(it0)
+            }
+            services.clear()
+        }
+        btn_Executor_shutdown_now.setOnClickListener {
+            services.forEach { it0 ->
+                threadPoolExceutorDemo.shutDownNow(it0)
+            }
+            services.clear()
+        }
 
     }
 

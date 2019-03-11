@@ -46,13 +46,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             <Button
-                    android:id="@+id/btn_Executor_newSingleThreadExecutor"
+                    android:id="@+id/btn_Executor_newSingleThreadPool"
                     android:text="newSingleThreadExecutor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             <Button
                     android:id="@+id/btn_Executor_newScheduledThreadPool"
                     android:text="newScheduledThreadPool"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            <Button
+                    android:id="@+id/btn_Executor_shutdown"
+                    android:text="ThreadPool shutdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            <Button
+                    android:id="@+id/btn_Executor_shutdown_now"
+                    android:text="ThreadPool shutdown now"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             <TextView
