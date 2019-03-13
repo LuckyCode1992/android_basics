@@ -2,6 +2,7 @@ package com.justcode.hxl.androidbasices
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.justcode.hxl.androidbasices.process.ProcessDemoActivity
 import com.justcode.hxl.androidbasices.thread.ThreadDemoActivity
 import com.justcode.hxl.androidbasices.utils.jump
 import kotlinx.android.synthetic.main.activity_main.*
@@ -21,6 +22,12 @@ class MainActivity : AppCompatActivity() {
          */
         btn_thread.setOnClickListener {
             jump<ThreadDemoActivity>()
+        }
+        /**
+         * 进程相关
+         */
+        btn_process.setOnClickListener {
+            jump<ProcessDemoActivity>()
         }
     }
 }

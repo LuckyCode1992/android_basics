@@ -12,6 +12,12 @@
             android:text="线程相关"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+    <Button
+            android:id="@+id/btn_process"
+            app:layout_constraintTop_toBottomOf="@+id/btn_thread"
+            android:text="进程相关"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
 
 </android.support.constraint.ConstraintLayout>
