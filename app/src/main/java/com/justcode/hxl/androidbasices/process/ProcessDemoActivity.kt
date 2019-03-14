@@ -1,12 +1,34 @@
 package com.justcode.hxl.androidbasices.process
 
 import android.annotation.SuppressLint
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.IBinder
+import com.justcode.hxl.androidbasices.IMyAidl
 import com.justcode.hxl.androidbasices.R
+import com.justcode.hxl.androidbasices.process.service.MyAidlService
 import kotlinx.android.synthetic.main.activity_process_demo.*
+import java.lang.Exception
+import kotlin.random.Random
 
 class ProcessDemoActivity : AppCompatActivity() {
+
+
+    private var aidl: IMyAidl? = null
+    private val mConnection = object : ServiceConnection {
+        override fun onServiceDisconnected(name: ComponentName?) {
+            aidl = null
+        }
+
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            aidl = IMyAidl.Stub.asInterface(service)
+        }
+
+    }
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +70,37 @@ class ProcessDemoActivity : AppCompatActivity() {
                 "2.2 Server 端具体的类里则必须是 ArrayList 或者 HashMap\n" +
                 "3.其他 AIDL 生成的接口\n" +
                 "4.实现 Parcelable 的实体"
+        tv_AIDL_code.text = "AIDL 的编写主要为以下三部分：\n" +
+                "一创建 AIDL :\n" +
+                "1.创建要操作的实体类，实现 Parcelable 接口，以便序列化/反序列化\n" +
+                "2.新建 aidl 文件夹，在其中创建接口 aidl 文件以及实体类的映射 aidl 文件\n" +
+                "3.Make project ，生成 Binder 的 Java 文件\n" +
+                "二服务端:\n" +
+                "1.创建 Service，在其中创建上面生成的 Binder 对象实例，实现接口定义的方法\n" +
+                "2.在 onBind() 中返回\n" +
+                "三客户端：\n" +
+                "1.实现 ServiceConnection 接口，在其中拿到 AIDL 类\n" +
+                "2.bindService()\n" +
+                "3.调用 AIDL 类中定义好的操作请求  "
+        btn_bind_service.setOnClickListener {
+            val intent = Intent()
+            intent.setClass(this, MyAidlService::class.java)
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE)
+        }
+        var i = 0
+        btn_test_aidl.setOnClickListener {
+            i++
+            val person = Person()
+            person.name = "张" + i * 10
+            person.age = i
+            try {
+                aidl?.addPerson(person)
+                var personList: MutableList<Person>? = aidl?.getPersonList()?.toMutableList()
+                tv_AIDL_result.text = ("aidl:" + personList.toString() + "\n")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
 
     }
 }
