@@ -45,26 +45,39 @@
 
             <View
                     style="@style/line"/>
+
             <TextView
                     android:id="@+id/tv_AIDL"
                     style="@style/TextArea.h_wrap"/>
+
             <TextView
                     android:id="@+id/tv_AIDL_code"
                     style="@style/TextArea.h_wrap"/>
+
             <Button
                     android:id="@+id/btn_bind_service"
                     android:text="绑定服务"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+
             <Button
                     android:id="@+id/btn_test_aidl"
                     android:text="测试aidl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+
             <TextView
                     android:id="@+id/tv_AIDL_result"
                     android:text="aidl结果："
                     style="@style/TextArea.h_wrap"/>
+
+            <View
+                    style="@style/line"/>
+
+            <TextView
+                    android:id="@+id/tv_Binder"
+                    style="@style/TextArea.h_wrap"/>
+
             <View
                     style="@style/line"/>
         </LinearLayout>

@@ -17,10 +17,10 @@ public class Person implements Parcelable {
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "\n Person{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
-                '}'+"\n";
+                '}' + "\n";
     }
 
     public static final Creator<Person> CREATOR = new Creator<Person>() {
