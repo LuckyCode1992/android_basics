@@ -80,6 +80,25 @@
 
             <View
                     style="@style/line"/>
+            <TextView
+                    android:id="@+id/tv_Messenger"
+                    style="@style/TextArea.h_wrap"/>
+            <Button
+                    android:id="@+id/btn_bind_messenger"
+                    android:text="绑定messenger服务"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            <Button
+                    android:id="@+id/btn_test_messenger"
+                    android:text="测试messenger"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                    android:id="@+id/tv_Messenger_result"
+                    android:text="Messenger结果："
+                    style="@style/TextArea.h_wrap"/>
+            <View
+                    style="@style/line"/>
         </LinearLayout>
 
     </ScrollView>

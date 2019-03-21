@@ -5,15 +5,18 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.os.*
 import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import android.os.IBinder
 import com.justcode.hxl.androidbasices.IMyAidl
 import com.justcode.hxl.androidbasices.R
+import com.justcode.hxl.androidbasices.process.service.ConfigHelper
 import com.justcode.hxl.androidbasices.process.service.MyAidlService
 import kotlinx.android.synthetic.main.activity_process_demo.*
 import java.lang.Exception
 import kotlin.random.Random
+import android.util.Log
+import com.justcode.hxl.androidbasices.process.service.MessengerService
+
 
 class ProcessDemoActivity : AppCompatActivity() {
 
@@ -26,6 +29,33 @@ class ProcessDemoActivity : AppCompatActivity() {
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             aidl = IMyAidl.Stub.asInterface(service)
+        }
+
+    }
+
+    val clientMesenger = Messenger(
+        @SuppressLint("HandlerLeak")
+        object : Handler() {
+            override fun handleMessage(msg: Message?) {
+                if (msg != null && msg.arg1 == ConfigHelper.MSG_ID_SERVER) {
+                    if (msg.getData() == null) {
+                        return
+                    }
+                    val content = msg.data.get(ConfigHelper.MSG_CONTENT) as String
+                    Log.d("MessengerService", "Message from server: $content")
+                    tv_Messenger_result.text = content
+                }
+            }
+        })
+
+    var serviceMesenger: Messenger? = null
+    val serviceConnection = object : ServiceConnection {
+        override fun onServiceDisconnected(name: ComponentName?) {
+            serviceMesenger = null
+        }
+
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            serviceMesenger = Messenger(service)
         }
 
     }
@@ -162,6 +192,28 @@ class ProcessDemoActivity : AppCompatActivity() {
                 "2.安全.Binder 机制为每个进程分配了 UID/PID 来作为鉴别身份的标示，并且在 Binder 通信时会根据UID/PID 进行有效性检测\n" +
                 "3.Client/Server 架构.这种架构使得通讯更为简单"
 
+        tv_Messenger.text = "Messenger “信使”，顾名思义，它的作用就是传递信息\n" +
+                "Messenger 其实就是 AIDL 的简化版，它把接口都封装好，我们只需在一个进程创建一个 Handler 传递给 Messenger，Messenger 帮我们把消息跨进程传递到另一个进程，我们在另一个进程的 Handler 在处理消息就可以了。\n" +
+                ""
+        btn_bind_messenger.setOnClickListener {
+            val intent = Intent(this, MessengerService::class.java)
+            bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        }
+        btn_test_messenger.setOnClickListener {
+            val msgContent = "你好呀"
+            val message = Message.obtain()
+            message.arg1 = ConfigHelper.MSG_ID_CLIENT
+            val bundle = Bundle()
+            bundle.putString(ConfigHelper.MSG_CONTENT, msgContent)
+            message.setData(bundle)
+            message.replyTo = clientMesenger
 
+            serviceMesenger?.send(message)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unbindService(serviceConnection)
     }
 }
